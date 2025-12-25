@@ -1,0 +1,113 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уроки</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lesson_form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lesson_section.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+</head>
+<body>
+    <div class="container">
+        <section class="column">
+            <h1>Добавить урок</h1>
+
+            <form id="lesson-form" class="lesson-form">
+                {% csrf_token %}
+                <label>
+                    Название урока
+                    <input type="text" name="title" required>
+                </label>
+
+                <label>
+                    Описание
+                    <textarea name="description"></textarea>
+                </label>
+
+                <label>
+                    Время начала
+                    <input type="datetime-local" name="start_time" required>
+                </label>
+
+                <label>
+                    Время окончания
+                    <input type="datetime-local" name="end_time">
+                </label>
+
+                <label>
+                    Статус
+                    <select name="status">
+                        <option value="scheduled">Запланирован</option>
+                        <option value="in_progress">В процессе</option>
+                        <option value="completed">Завершен</option>
+                        <option value="cancelled">Отменен</option>
+                    </select>
+                </label>
+
+                <button type="submit">Добавить урок</button>
+
+                <div id="lesson-form-message"></div>
+            </form>
+
+
+        </section>
+
+        <section class="column">
+            <h1>Список уроков</h1>
+
+            <div class="lessons-section">
+                <div class="lessons-list" id="lessonsList"></div>
+
+                <div class="pagination">
+                    <button id="prevPage" disabled>←</button>
+                    <span id="pageInfo"></span>
+                    <button id="nextPage">→</button>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="column">
+            <h1>Уведомления</h1>
+
+            <div class="notifications-container">
+                <div class="notifications-header">
+                    <div class="connection-status" id="wsStatus">
+                        <div class="status-dot"></div>
+                        <span class="status-text">Подключение...</span>
+                    </div>
+                    <div class="notifications-controls">
+                        <button id="clearNotifications" class="btn-icon" title="Очистить все">
+                            🗑️
+                        </button>
+                        <button id="togglePause" class="btn-icon" title="Пауза">
+                            ⏸️
+                        </button>
+                    </div>
+                </div>
+
+                <div class="notifications-list" id="notificationsList">
+                    <!-- Уведомления будут появляться здесь -->
+                    <div class="notification-placeholder">
+                        <div class="notification-placeholder-icon">🔔</div>
+                        <p>Уведомления появятся здесь</p>
+                        <small>Ожидание сообщений от WebSocket...</small>
+                    </div>
+                </div>
+
+                <div class="notifications-stats">
+                    <span id="notificationsCount">0</span> сообщений
+                </div>
+            </div>
+
+        </section>
+    </div>
+<script src="{% static 'js/websocket.js' %}"></script>
+<script src="{% static 'js/lesson_section.js' %}"></script>
+<script src="{% static 'js/lesson_add.js' %}"></script>
+</body>
+</html>

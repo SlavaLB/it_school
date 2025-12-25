@@ -1,0 +1,12 @@
+Django==5.2
+gunicorn>=22.1
+
+# Celery
+celery==5.3.4
+redis==5.0.1
+flower==2.0.1
+
+# WebSocket
+channels==4.0.0
+channels-redis==4.1.0
+daphne==4.0.0

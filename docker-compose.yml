@@ -1,0 +1,63 @@
+version: "3.9"
+services:
+  web:
+    build:
+      context: ./test_it_school
+      dockerfile: Dockerfile
+    container_name: django_app
+    volumes:
+      - ./test_it_school:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - DJANGO_SETTINGS_MODULE=test_it_school.settings
+      - PYTHONUNBUFFERED=1
+    command: sh -c "python manage.py migrate && python manage.py collectstatic --noinput && daphne -b 0.0.0.0 -p 8000 test_it_school.asgi:application"
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  celery_worker:
+    build:
+      context: ./celery_service
+      dockerfile: Dockerfile
+    command: celery -A worker worker --loglevel=info --concurrency=4
+    volumes:
+      - ./logs/celery:/var/log/celery
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+    depends_on:
+      - redis
+
+  celery_beat:
+    build: ./celery_service
+    command: celery -A worker beat --loglevel=info
+    volumes:
+      - ./logs/celery:/var/log/celery
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - LOG_DIR=/var/log/celery
+    depends_on:
+      - redis
+
+  nginx:
+    build: ./infra
+    container_name: lesson_nginx_proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+      - celery_worker
+      - redis
+
+volumes:
+  redis_data:

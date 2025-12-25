@@ -1,0 +1,91 @@
+/* notifications.css */
+.notification {
+    border-left: 4px solid #4CAF50;
+    margin-bottom: 10px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.notification-body {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    margin: 8px 0;
+}
+
+/* Если хотите сохранять переносы через CSS вместо <br> */
+.notification-body.with-line-breaks {
+    white-space: pre-line !important;
+}
+
+/* Стили для разных типов уведомлений */
+.notification.success {
+    border-left-color: #4CAF50;
+    background: #f1f8e9;
+}
+
+.notification.error {
+    border-left-color: #f44336;
+    background: #ffebee;
+}
+
+.notification.info {
+    border-left-color: #2196F3;
+    background: #e3f2fd;
+}
+
+.notification.reminder {
+    border-left-color: #FF9800;
+    background: #fff3e0;
+}
+
+.notification.system {
+    border-left-color: #9E9E9E;
+    background: #f5f5f5;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.notification-title {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: #666;
+}
+
+.notification-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.notification-type {
+    color: #666;
+    font-style: italic;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 4px;
+}
+
+.notification-close:hover {
+    color: #f44336;
+}

@@ -2,11 +2,11 @@
 
 1. **Клонировать репозиторий**
 ```bash
-git clone <ссылка на репозиторий>
+git clone git@github.com:SlavaLB/it_school.git
 ```
 
 ```bash
-cd <имя репозитория>
+cd it_school/
 ```
 
 ```bash

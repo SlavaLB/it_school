@@ -263,7 +263,6 @@ class WebSocketManager {
             second: '2-digit'
         });
 
-        // ⭐⭐ ИСПРАВЛЕННАЯ ЧАСТЬ: Добавляем поддержку переносов строк ⭐⭐
         div.innerHTML = `
             <div class="notification-header">
                 <div class="notification-title">${notification.title || 'Уведомление'}</div>
